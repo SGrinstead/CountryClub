@@ -52,5 +52,17 @@ namespace CountryClubAPI.Controllers
             Response.StatusCode = 201;
             return new JsonResult(booking);
         }
+
+        [Route("today")]
+        public IActionResult Today()
+        {
+            var bookingsToday = _context.Bookings
+                .Where(booking =>
+                booking.StartTime.DayOfYear == DateTime.Today.DayOfYear
+                && booking.StartTime.Year == DateTime.Today.Year)
+                .ToList();
+
+            return new JsonResult(bookingsToday);
+        }
     }
 }
