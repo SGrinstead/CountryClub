@@ -17,5 +17,12 @@ namespace CountryClubAPI.Controllers
         {
             _context = context;
         }
+
+        public IActionResult AllBookings()
+        {
+            var bookings = _context.Bookings;
+
+            return new JsonResult(bookings);
+        }
     }
 }
