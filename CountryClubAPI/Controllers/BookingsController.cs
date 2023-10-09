@@ -25,6 +25,19 @@ namespace CountryClubAPI.Controllers
             return new JsonResult(bookings);
         }
 
+        [Route("{id}")]
+        public IActionResult Booking(int id)
+        {
+            var booking = _context.Bookings.Find(id);
+
+            if(booking is null)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(booking);
+        }
+
         [HttpPost]
         public IActionResult CreateBooking(Booking booking)
         {
