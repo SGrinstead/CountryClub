@@ -54,7 +54,7 @@ namespace CountryClubAPI.Controllers
         }
 
         [Route("today")]
-        public IActionResult Today()
+        public IActionResult BooksingsToday()
         {
             var bookingsToday = _context.Bookings
                 .Where(booking =>
@@ -63,6 +63,20 @@ namespace CountryClubAPI.Controllers
                 .ToList();
 
             return new JsonResult(bookingsToday);
+        }
+
+        [Route("thisweek")]
+        public IActionResult BookingsThisWeek()
+        {
+            var today = DateTime.Today.ToUniversalTime();
+            var weekFromNow = DateTime.Today.AddDays(8).ToUniversalTime();
+
+            var bookingsThisWeek = _context.Bookings
+                .Where(booking =>
+                booking.StartTime.ToUniversalTime() > today && booking.StartTime.ToUniversalTime() < weekFromNow)
+                .ToList();
+
+            return new JsonResult(bookingsThisWeek);
         }
     }
 }
