@@ -56,10 +56,13 @@ namespace CountryClubAPI.Controllers
         [Route("today")]
         public IActionResult BooksingsToday()
         {
+            var today = DateTime.Today.ToUniversalTime();
+            var tomorrow = DateTime.Today.AddDays(1).ToUniversalTime();
+
             var bookingsToday = _context.Bookings
                 .Where(booking =>
-                booking.StartTime.DayOfYear == DateTime.Today.DayOfYear
-                && booking.StartTime.Year == DateTime.Today.Year)
+                booking.StartTime.ToUniversalTime() > today
+                && booking.StartTime.ToUniversalTime() < tomorrow)
                 .ToList();
 
             return new JsonResult(bookingsToday);
